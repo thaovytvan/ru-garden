@@ -1,0 +1,49 @@
+@import "tailwindcss";
+@import "@radix-ui/themes/styles.css";
+
+:root {
+  color-scheme: light;
+  --background: #FEFAE0; /* Warm cream */
+  --foreground: #1B4332; /* Deep forest green */
+  --primary: #2D6A4F;
+  --secondary: #95D5B2; /* Sage */
+  --accent: #DDA15E; /* Accent gold */
+  --muted: #E9EDC9;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+}
+
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-outfit), sans-serif;
+}
+
+/* Global Cursor Pointer for Clickable Elements */
+button, 
+[role="button"],
+.rt-Button,
+.rt-IconButton,
+.rt-Link,
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+/* Ensure Radix UI interactive components have pointer */
+.rt-DropdownMenuContent .rt-DropdownMenuItem {
+  cursor: pointer;
+}
