@@ -42,7 +42,7 @@ export const getDiscountById = async (req: Request, res: Response, next: NextFun
   try {
     const { id } = req.params;
     const discount = await prisma.discount.findUnique({
-      where: { id },
+      where: { id: id as string },
     });
     if (!discount) {
       res.status(404).json({ error: "Không tìm thấy mã giảm giá." });
@@ -95,7 +95,7 @@ export const updateDiscount = async (req: Request, res: Response, next: NextFunc
     } = req.body;
 
     const discount = await prisma.discount.update({
-      where: { id },
+      where: { id: id as string },
       data: {
         code: code?.toUpperCase(),
         type,
@@ -117,7 +117,7 @@ export const updateDiscount = async (req: Request, res: Response, next: NextFunc
 export const deleteDiscount = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    await prisma.discount.delete({ where: { id } });
+    await prisma.discount.delete({ where: { id: id as string } });
     res.status(204).send();
   } catch (error) {
     next(error);
