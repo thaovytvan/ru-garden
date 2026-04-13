@@ -65,7 +65,7 @@ export default function AdminLayout() {
           {!isCollapsed && (
             <>
               <img
-                src="/src/assets/logo.png"
+                src="/logo.png"
                 alt="Logo"
                 width={50}
                 height={50}
