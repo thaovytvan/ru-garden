@@ -29,14 +29,22 @@ const httpServer = createServer(app);
 
 // Socket.io setup
 const allowedOrigins = [
-  process.env.FRONTEND_URL || "http://localhost:3000",
-  process.env.ADMIN_URL || "http://localhost:5173",
+  (process.env.FRONTEND_URL || "http://localhost:3000").replace(/\/$/, ""),
+  (process.env.ADMIN_URL || "http://localhost:5173").replace(/\/$/, ""),
 ];
 
 const io = new Server(httpServer, {
   cors: {
-    origin: allowedOrigins,
+    origin: (origin: string | undefined, callback: any) => {
+      if (!origin || allowedOrigins.includes(origin.replace(/\/$/, ""))) {
+        callback(null, true);
+      } else {
+        console.log("CORS blocked for origin:", origin);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
@@ -45,7 +53,13 @@ app.use(helmet());
 app.use(compression());
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: (origin: string | undefined, callback: any) => {
+      if (!origin || allowedOrigins.includes(origin.replace(/\/$/, ""))) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
