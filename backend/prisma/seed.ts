@@ -202,6 +202,18 @@ async function main() {
   }
   console.log(`✅ Seeded ${products.length} products`);
 
+  // 3. Seed Admin User
+  const adminPassword = await bcrypt.hash("Admin@123", 10);
+  await prisma.admin.upsert({
+    where: { username: "admin" },
+    update: { password: adminPassword },
+    create: {
+      username: "admin",
+      password: adminPassword,
+      email: "admin@rugarden.com",
+      fullName: "Rú Garden Admin",
+    },
+  });
   console.log("✅ Seeded admin user (username: admin, password: Admin@123)");
 
   // 4. Seed Blog Posts
